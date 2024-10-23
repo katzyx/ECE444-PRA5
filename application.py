@@ -2,12 +2,17 @@ from flask import Flask
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.naive_bayes import MultinomialNB
 import pickle
+import json
+
 
 application = app = Flask(__name__)
 # load the config
 application.config.from_object(__name__)
 
-@application.route('/')
+@application.route("/")
+def index():
+    return "Your Flask App Works! V1.0"
+
 def load_model():
     loaded_model = None
     with open('basic_classifier.pkl', 'rb') as fid:
@@ -19,5 +24,5 @@ def load_model():
 
     return loaded_model.predict(vectorizer.transform(['This is fake news']))[0]
 
-if __name__ == '__main__':
-    application.run()
+if __name__ == "__main__":
+    application.run(port=5000, debug=True)
